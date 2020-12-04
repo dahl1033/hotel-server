@@ -4,7 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "pet_hotel"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost:5432/pet_hotel"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 class PetsModel(db.Model):
@@ -50,7 +54,7 @@ def getPets():
         "is_checked_in": pet.is_checked_in
         } for pet in pets]
     return {"count": len(results), "pets": results}
-    
+    print(pets)
 
 # cur = conn.cursor()
 # # dict_cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -67,4 +71,4 @@ def getPets():
 #     return jsonify(records)
 
 
-app.run()
+# app.run()
